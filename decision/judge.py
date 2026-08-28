@@ -14,6 +14,12 @@ logger = logging.getLogger("decision.judge")
 FinalRecommendation = Literal["STRONG_HIRE", "HIRE", "HOLD", "NO_HIRE"]
 
 
+class AdjacentRoleCompatibility(BaseModel):
+    """Represents an alternative career field or adjacent role paired with explicit interviewer judging reasoning."""
+    role_title: str = Field(..., description="Job title, career field, or domain area candidate is compatible with.")
+    compatibility_reason: str = Field(..., description="Explicit, evidence-backed reason based on interviewer judging explaining why candidate fits this field.")
+
+
 class FinalDecision(BaseModel):
     """Structured representation of the panel's final verdict and synthesis."""
 
@@ -46,9 +52,9 @@ class FinalDecision(BaseModel):
         default_factory=list,
         description="Constructive, actionable feedback and growth recommendations for the candidate to improve their technical skills, communication, and interview presentation."
     )
-    adjacent_roles: List[str] = Field(
+    adjacent_roles: List[AdjacentRoleCompatibility] = Field(
         default_factory=list,
-        description="List of 2-3 alternative career fields, industries, or adjacent technical roles where the candidate's skills would be highly valuable."
+        description="List of 2-3 alternative career fields or adjacent roles paired with explicit interviewer judging reasoning."
     )
 
 
@@ -77,7 +83,7 @@ STRICT SYNTHESIS GUIDELINES:
 3. SPECIFIC DEBATE QUOTES: You MUST cite at least 2 agents by name (e.g. 'Technical Lead Agent', 'Risk & Security Skeptic Agent', 'Engineering Director Agent', 'HR & Culture Specialist Agent') and reference a specific point or argument each raised during debate.
 4. UNRESOLVED TENSIONS: Explicitly state whether debate resolved disagreements or not. Do NOT paper over non-convergence; any lingering dissent MUST be recorded in 'unresolved_disagreements'.
 5. ACTIONABLE CANDIDATE FEEDBACK: Provide 2-4 constructive, growth-focused feedback statements in 'candidate_feedback' helping the candidate improve their technical depth, transparency, and interview presentation.
-6. ADJACENT ROLES & ALTERNATIVE CAREER FIELDS: Identify 2-3 alternative career fields, adjacent job titles, or domain areas in 'adjacent_roles' where the candidate's skillset would be a strong fit.
+6. ADJACENT ROLES WITH INTERVIEWER REASONING: Identify 2-3 alternative career fields or adjacent job titles in 'adjacent_roles'. For EACH role, provide an explicit 'compatibility_reason' referencing interviewer agent findings (e.g. Technical Lead's architectural praise or Engineering Director's domain notes).
 7. OUTPUT FORMAT: Strictly valid JSON matching the schema below:
 
 {
@@ -89,7 +95,12 @@ STRICT SYNTHESIS GUIDELINES:
   "unresolved_disagreements": ["Specific lingering tension 1", "Specific lingering tension 2"],
   "risk_mitigations": ["Required post-hire check 1", "Required post-hire check 2"],
   "candidate_feedback": ["Actionable skill improvement 1", "Constructive interview feedback 2"],
-  "adjacent_roles": ["Alternative Role / Field 1", "Alternative Role / Field 2"]
+  "adjacent_roles": [
+    {
+      "role_title": "MLOps & AI Infrastructure Engineer",
+      "compatibility_reason": "Technical Lead Agent highlighted candidate's hands-on experience building production deployment pipelines and containerizing model workloads."
+    }
+  ]
 }
 """
 

@@ -96,8 +96,13 @@ class ReportFormatter:
 
         if getattr(decision, "adjacent_roles", []):
             lines.append("### 🎯 Recommended Adjacent Roles & Alternative Career Fields:")
-            for role in decision.adjacent_roles:
-                lines.append(f"- 🚀 **{role}**")
+            for item in decision.adjacent_roles:
+                if hasattr(item, "role_title"):
+                    lines.append(f"- 🚀 **{item.role_title}**: *{item.compatibility_reason}*")
+                elif isinstance(item, dict):
+                    lines.append(f"- 🚀 **{item.get('role_title', 'Adjacent Role')}**: *{item.get('compatibility_reason', 'Compatible based on interviewer findings.')}*")
+                else:
+                    lines.append(f"- 🚀 **{str(item)}**")
             lines.append("")
 
         lines.extend([

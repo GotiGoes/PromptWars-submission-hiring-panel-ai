@@ -697,13 +697,18 @@ def main():
             st.markdown(
                 """
                 <div style='background-color:#EDE9FE; border:2px solid #A855F7; border-left:6px solid #6B21A8; padding:16px; border-radius:8px;'>
-                    <h4 style='margin:0 0 8px 0; color:#000000;'>🎯 Recommended Adjacent Roles & Alternative Career Fields</h4>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>🎯 Recommended Adjacent Roles & Interviewer Compatibility Reasons</h4>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
-            for r in decision.adjacent_roles:
-                st.markdown(f"- 🚀 **{r}**")
+            for item in decision.adjacent_roles:
+                if hasattr(item, "role_title"):
+                    st.markdown(f"- 🚀 **{item.role_title}**: *{item.compatibility_reason}*")
+                elif isinstance(item, dict):
+                    st.markdown(f"- 🚀 **{item.get('role_title', 'Adjacent Role')}**: *{item.get('compatibility_reason', 'Compatible based on interviewer findings.')}*")
+                else:
+                    st.markdown(f"- 🚀 **{str(item)}**")
 
     # --- TAB 2: AGENT OPINIONS ---
     with tab_opinions:
