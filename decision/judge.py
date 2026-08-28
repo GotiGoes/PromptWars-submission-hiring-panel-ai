@@ -46,6 +46,10 @@ class FinalDecision(BaseModel):
         default_factory=list,
         description="Constructive, actionable feedback and growth recommendations for the candidate to improve their technical skills, communication, and interview presentation."
     )
+    adjacent_roles: List[str] = Field(
+        default_factory=list,
+        description="List of 2-3 alternative career fields, industries, or adjacent technical roles where the candidate's skills would be highly valuable."
+    )
 
 
 JUDGE_SCHEMA_PROMPT = """You are the Lead Hiring Panel Judge.
@@ -73,7 +77,8 @@ STRICT SYNTHESIS GUIDELINES:
 3. SPECIFIC DEBATE QUOTES: You MUST cite at least 2 agents by name (e.g. 'Technical Lead Agent', 'Risk & Security Skeptic Agent', 'Engineering Director Agent', 'HR & Culture Specialist Agent') and reference a specific point or argument each raised during debate.
 4. UNRESOLVED TENSIONS: Explicitly state whether debate resolved disagreements or not. Do NOT paper over non-convergence; any lingering dissent MUST be recorded in 'unresolved_disagreements'.
 5. ACTIONABLE CANDIDATE FEEDBACK: Provide 2-4 constructive, growth-focused feedback statements in 'candidate_feedback' helping the candidate improve their technical depth, transparency, and interview presentation.
-6. OUTPUT FORMAT: Strictly valid JSON matching the schema below:
+6. ADJACENT ROLES & ALTERNATIVE CAREER FIELDS: Identify 2-3 alternative career fields, adjacent job titles, or domain areas in 'adjacent_roles' where the candidate's skillset would be a strong fit.
+7. OUTPUT FORMAT: Strictly valid JSON matching the schema below:
 
 {
   "candidate_name": "Full Name",
@@ -83,7 +88,8 @@ STRICT SYNTHESIS GUIDELINES:
   "key_strengths": ["Strength 1", "Strength 2"],
   "unresolved_disagreements": ["Specific lingering tension 1", "Specific lingering tension 2"],
   "risk_mitigations": ["Required post-hire check 1", "Required post-hire check 2"],
-  "candidate_feedback": ["Actionable skill improvement 1", "Constructive interview feedback 2"]
+  "candidate_feedback": ["Actionable skill improvement 1", "Constructive interview feedback 2"],
+  "adjacent_roles": ["Alternative Role / Field 1", "Alternative Role / Field 2"]
 }
 """
 

@@ -692,6 +692,19 @@ def main():
             for fb in decision.candidate_feedback:
                 st.markdown(f"- 🎓 **{fb}**")
 
+        if getattr(decision, "adjacent_roles", []):
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(
+                """
+                <div style='background-color:#EDE9FE; border:2px solid #A855F7; border-left:6px solid #6B21A8; padding:16px; border-radius:8px;'>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>🎯 Recommended Adjacent Roles & Alternative Career Fields</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+            for r in decision.adjacent_roles:
+                st.markdown(f"- 🚀 **{r}**")
+
     # --- TAB 2: AGENT OPINIONS ---
     with tab_opinions:
         st.markdown("### 🕵️ Independent Opinions (Before Debate)")

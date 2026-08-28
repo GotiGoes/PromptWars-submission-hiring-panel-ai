@@ -94,6 +94,12 @@ class ReportFormatter:
                 lines.append(f"- 🎓 {fb}")
             lines.append("")
 
+        if getattr(decision, "adjacent_roles", []):
+            lines.append("### 🎯 Recommended Adjacent Roles & Alternative Career Fields:")
+            for role in decision.adjacent_roles:
+                lines.append(f"- 🚀 **{role}**")
+            lines.append("")
+
         lines.extend([
             "---",
             "",
