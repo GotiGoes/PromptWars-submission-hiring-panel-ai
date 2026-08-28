@@ -1,54 +1,54 @@
-# 🤖 Autonomous Multi-Agent Hiring Panel AI
+# 🧑‍💼 Autonomous Multi-Agent Hiring Panel AI
 
-An autonomous, multi-agent AI system that evaluates job candidates by extracting evidence-backed facts, conducting independent evaluations across four specialized panel lenses, facilitating a multi-round cross-agent debate, and synthesizing a non-averaged, risk-categorized hiring recommendation.
+An autonomous, multi-agent AI system that evaluates job candidates by extracting evidence-backed facts, conducting independent evaluations across four specialized panel lenses, facilitating a multi-round cross-agent debate, and synthesizing a non-averaged, risk-categorized hiring recommendation with actionable candidate growth roadmaps.
 
 ---
 
-## 🏆 Competition Reviewer Quick Start (30-Second Guide)
+## ✨ Features at a Glance
 
-If you are a hackathon judge or reviewer evaluating this project, follow these 3 quick steps to run the interactive web interface:
+- 🕵️ **4 Autonomous Agent Lenses**: *Technical Lead*, *HR & Culture Specialist*, *Engineering Director*, and *Risk & Security Skeptic*.
+- 🗣️ **Multi-Round Cross-Agent Debate**: Rebuttals challenge peer claims and dynamically update scores across debate rounds.
+- ⚖️ **Risk-Categorized Panel Judge**: Synthesizes consensus verdicts by evaluating non-negotiable risk categories (*integrity/trust risk*, *operational safety risk*, *skill-gap risk*) without simple vote counting.
+- 🎓 **Actionable Candidate Growth Roadmap**: Generates constructive feedback and skill improvement steps for the interviewed candidate.
+- 🎯 **Adjacent Roles Matcher**: Identifies 2–3 alternative career fields and adjacent technical roles where the candidate's skills excel.
+- 🎙️ **Offline Multi-Voice Audio Dramatization**: Synthesizes multi-voice audio debate dramatizations locally using `pyttsx3` with zero external API fees.
+- 🎨 **Purple & Red High-Contrast UI**: Designed with rich purple/red background containers and bold black text (`#000000`) for maximum legibility.
+- 🧪 **1-Click Multi-Layer Integrity Suite**: Automated test suite (`py test_full_integrity_audit.py`) verifying data encoding, Python syntax, fact veracity, and report generation.
+
+---
+
+## 🏆 Quick Start Guide (30-Second Walkthrough for Reviewers)
+
+Follow these 3 simple steps to launch and test the interactive web interface:
 
 ### 1. Installation & Key Setup
 ```bash
-# Clone repo & install dependencies
+# 1. Clone repository & install dependencies
 pip install -r requirements.txt
 
-# Copy configuration template & add your Google Gemini API Key
+# 2. Create environment configuration file
 cp .env.example .env
 ```
-*Add your Gemini API Key in `.env` (`GEMINI_API_KEY=your_key_here`). Get a free key at [aistudio.google.com](https://aistudio.google.com).*
+> **API Key Setup**: Add your Gemini API Key in `.env` (`GEMINI_API_KEY=your_key_here`). Get a free key at [aistudio.google.com](https://aistudio.google.com).
 
 ### 2. Launch Interactive Web App
 ```bash
 py -m streamlit run app.py
 ```
-*Open `http://localhost:8501` in your browser.*
+> *Open `http://localhost:8501` in your browser.*
 
-### 3. Interactive Evaluation Walkthrough
-1. **Select a Candidate Card**: Click **Rohan Malhotra** (Candidate A) or **Ananya Iyer** (Candidate B) at the top.
-2. **Run Evaluation**: Click the prominent blue button **`🚀 Step 2: Run Live Evaluation Panel`**. Watch the 5-stage progress bar execute live Gemini API calls.
-3. **Inspect the 4 Output Tabs**:
-   - 🏆 **Summary & Verdict**: Lead Judge Chain-of-Thought reasoning, risk categorization, and required post-hire mitigations.
-   - 🕵️ **Independent Opinions**: Initial pre-debate agent positions vs final post-debate positions side-by-side.
-   - 🗣️ **Multi-Round Debate**: Agent score trajectory table, color-coded rebuttals, and **Voice Debate Audio Generator** (`🔊 Generate Voice Debate`).
-   - 📜 **Full Report**: Complete 7-section structured Markdown report with 1-click browser download (`📥 Download Report`).
-
----
-
-## ♿ Accessibility & Usability Features (WCAG 2.1 AA Compliant)
-
-This application was engineered with a strict focus on accessibility, clarity, and usability:
-
-- 🎨 **High-Contrast Visual Hierarchy (WCAG 2.1 AA)**: All body text (`#0F172A`, `#1E293B`) and headings maintain a >7:1 contrast ratio against light backgrounds (`#FFFFFF`, `#F8FAFC`).
-- 🏷️ **Dual Status Indicators**: Never relies on color alone. Every verdict and agent rating pairs high-contrast background badges with explicit text and icons (e.g., `[✅ HIRE]`, `[🚫 NO HIRE]`, `[⚠️ HOLD]`).
-- 🔊 **Auditory Voice Mode (`pyttsx3`)**: Converts the debate transcript into a multi-voice audio dramatization for auditory accessibility.
-- 💬 **Accessible Control Tooltips**: Every interactive button, selector, and uploader includes explicit `help=` tooltips for screen-reader clarity and hover guidance.
-- 📐 **Readable Typography Scale**: Minimum body font size of 15px with 1.6 line-height for effortless legibility across display sizes.
-- 🧩 **Progressive Disclosure**: Information is structured into 4 logical tabs, preventing cognitive overload and wall-of-text fatigue.
+### 3. Step-by-Step Evaluation Walkthrough
+1. **Select a Candidate**: Click **Rohan Malhotra** (Candidate A) or **Ananya Iyer** (Candidate B) at the top of the page.
+2. **Run Evaluation Panel**: Click the primary button **`🚀 Step 2: Run Live Evaluation Panel`**. Watch the 5-stage live pipeline execute.
+3. **Explore 4 Interactive Output Tabs**:
+   - 🏆 **Summary & Verdict**: Panel Judge CoT reasoning, risk categorization, required onboarding mitigations, **Candidate Growth Roadmap**, and **Adjacent Roles Matcher**.
+   - 🕵️ **Independent Opinions**: Pre-debate vs post-debate positions side-by-side.
+   - 🗣️ **Multi-Round Debate**: Score trajectory table, color-coded rebuttals, and **Offline Voice Debate Audio Player** (`🔊 Generate Voice Debate`).
+   - 📜 **Full Report**: Complete 7-section structured Markdown document with 1-click download (`📥 Download Report`).
 
 ---
 
-## 🏗️ Architecture & 5-Stage Pipeline
+## 🏗️ System Architecture & Pipeline
 
 ```
 +-----------------------------------------------------------------------------------+
@@ -65,19 +65,19 @@ This application was engineered with a strict focus on accessibility, clarity, a
                                          v
 +-----------------------------------------------------------------------------------+
 |                      STAGE 3: MULTI-ROUND CROSS-AGENT DEBATE                      |
-|  Rebuttals challenge peer points; Round 2 fires dynamically if scores shift       |
+|  Rebuttals challenge peer claims; Round 2 fires dynamically if scores shift       |
 +-----------------------------------------------------------------------------------+
                                          |
                                          v
 +-----------------------------------------------------------------------------------+
 |                          STAGE 4: RISK-CATEGORIZED JUDGE                          |
-|  Synthesizes final verdict by evaluating non-negotiable risk categories           |
+|  Synthesizes verdict, candidate growth feedback & adjacent career role matcher    |
 +-----------------------------------------------------------------------------------+
                                          |
                                          v
 +-----------------------------------------------------------------------------------+
 |                     STAGE 5: REPORT FORMATTER & STREAMLIT UI                      |
-|  Renders 7-section structured Markdown report & audio debate dramatization       |
+|  Renders 7-section Markdown report & offline multi-voice audio dramatization      |
 +-----------------------------------------------------------------------------------+
 ```
 
@@ -94,22 +94,22 @@ This application was engineered with a strict focus on accessibility, clarity, a
 
 ---
 
-## 💡 Key Design Decisions
+## 🧪 Running Automated System Integrity Checks
 
-1. **Isolated LLM Calls Per Agent (No Single-Prompt Persona Bleed)**:
-   Executing each agent in a dedicated LLM context prevents prompt contamination and forced false consensus.
-2. **Unverifiable Claim Fact Category**:
-   Vague candidate assertions lacking concrete numbers are extracted into `unverifiable_claim` and routed to `unresolved_gaps` to lower confidence rather than imposing arbitrary penalties.
-3. **Revision-Triggered Multi-Round Debate**:
-   Round 2 debate fires dynamically only if an agent updates its position in Round 1. Prompts strictly forbid citing meta-consensus ("peers agree") as justification.
-4. **Risk-Categorized Judge Synthesis (No Score Averaging or Vote Counting)**:
-   The Panel Judge explicitly categorizes dissenting concerns (`integrity/trust risk`, `operational safety risk`, `skill-gap risk`, `retention risk`) and evaluates whether the risk is mitigable via onboarding or represents a non-negotiable disqualifier.
-5. **Offline Voice Mode Dramatization (`pyttsx3`)**:
-   Generates a multi-voice audio dramatization of the debate using `pyttsx3`, mapping each agent persona to distinct voice properties.
+Run the automated 3-stage integrity audit to verify system data, syntax, and LLM quote veracity:
+
+```bash
+py test_full_integrity_audit.py
+```
+
+**Audit Checks Performed**:
+- ✅ **Audit 1: Sample Data Integrity**: Verifies UTF-8 encoding and file completeness for all candidate resumes, transcripts, and job descriptions.
+- ✅ **Audit 2: Codebase Syntax**: Compiles all 34 Python modules cleanly with zero syntax errors.
+- ✅ **Audit 3: Fact Grounding Veracity & Pipeline**: Runs the live pipeline to ensure 100% quote grounding (0 ungrounded quotes) and validates all 7 report sections.
 
 ---
 
-## 🚀 How to Run
+## 🚀 Execution Modes
 
 ### Option 1: Streamlit Web UI (Recommended)
 ```bash
@@ -132,15 +132,16 @@ py generate_all_reports.py
 ## 📂 Project Structure
 
 ```
-├── profile_builder/     # Fact extraction engine & AI candidate generator.
-├── agents/              # 4 isolated persona agents (Technical, HR, Director, Skeptic).
-├── debate/              # Multi-round debate orchestrator & pyttsx3 voice mode engine.
-├── decision/            # Panel Judge module rendering weighted final decisions.
-├── report/              # Renders 7-section structured Markdown reports.
-├── sample_data/         # Candidate datasets (candidate_a, candidate_b) and job description.
-├── reports/             # Output directory for generated Markdown reports and audio files.
-├── app.py               # Streamlit web application with accessible UI & 4 output tabs.
-├── main.py              # CLI entry point and pipeline orchestrator.
-├── config.py            # Centralized system settings and environment key loader.
-└── .env.example         # Environment template for reviewer setup.
+├── profile_builder/           # Fact extraction engine & AI candidate generator.
+├── agents/                    # 4 isolated persona agents (Technical, HR, Director, Skeptic).
+├── debate/                    # Multi-round debate orchestrator & pyttsx3 voice mode engine.
+├── decision/                  # Panel Judge module rendering weighted final decisions & growth plans.
+├── report/                    # Renders 7-section structured Markdown reports.
+├── sample_data/               # Benchmark candidate datasets (candidate_a, candidate_b) and job description.
+├── reports/                   # Output directory for generated Markdown reports and audio files.
+├── test_full_integrity_audit.py # Multi-layer integrity audit test suite.
+├── app.py                     # Streamlit web application with accessible purple/red UI.
+├── main.py                    # CLI entry point and pipeline orchestrator.
+├── config.py                  # Centralized system settings and environment key loader.
+└── .env.example               # Environment template for reviewer setup.
 ```
