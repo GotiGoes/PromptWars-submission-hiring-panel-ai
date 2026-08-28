@@ -7,5 +7,19 @@ __pycache__/
 .pytest_cache/
 *.log
 *.wav
-reports/*.wav
 scratch/
+test_*.py
+verify_*.py
+
+# Ignore dynamically generated / user-uploaded candidate folders
+sample_data/*
+!sample_data/candidate_a/
+!sample_data/candidate_a/*
+!sample_data/candidate_b/
+!sample_data/candidate_b/*
+!sample_data/job_description.txt
+
+# Ignore dynamically generated candidate reports & audio files
+reports/*
+!reports/candidate_a_report.md
+!reports/candidate_b_report.md
