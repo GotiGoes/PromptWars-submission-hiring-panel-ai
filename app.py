@@ -152,7 +152,6 @@ def main():
         .main,
         section.main {
             background-color: #FAF5FF !important; /* Soft Light Purple Main Background */
-            color: #000000 !important;
         }
 
         /* 2. Sidebar Background & Borders */
@@ -163,36 +162,20 @@ def main():
             border-right: 2px solid #C084FC !important;
         }
 
-        /* 3. Sidebar Typography */
-        [data-testid="stSidebar"] *,
-        [data-testid="stSidebar"] p,
-        [data-testid="stSidebar"] span,
-        [data-testid="stSidebar"] div,
-        [data-testid="stSidebar"] h1,
-        [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3,
-        [data-testid="stSidebar"] h4,
-        [data-testid="stSidebar"] label,
-        [data-testid="stSidebar"] b,
-        [data-testid="stSidebar"] small {
+        /* 3. Typography: Target text elements ONLY (DO NOT target div container positioning) */
+        p, span, label, h1, h2, h3, h4, h5, h6, li, b, i, small, td, th {
             color: #000000 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         /* 4. Expander Header Bar (Details Summary) */
         [data-testid="stExpander"] summary,
         .stExpander summary {
             background-color: #E9D5FF !important; /* Vibrant Soft Purple Header Bar */
-            color: #000000 !important;
             border-radius: 6px !important;
             padding: 10px 14px !important;
             font-weight: 700 !important;
             border-bottom: 2px solid #C084FC !important;
-        }
-
-        [data-testid="stExpander"] summary *,
-        .stExpander summary * {
-            color: #000000 !important;
-            font-weight: 700 !important;
         }
 
         /* 5. Expander Main Body Box */
@@ -217,12 +200,7 @@ def main():
             font-weight: 700 !important;
         }
 
-        /* 7. Ensure All Text in Body is Crisp Black */
-        .stApp p, .stApp span, .stApp label, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6, .stApp li, .stApp div, .stApp b, .stApp i, .stApp td, .stApp th {
-            color: #000000 !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
+        /* 7. Button Styling */
         .stButton>button {
             font-weight: 700 !important;
             border-radius: 6px !important;
