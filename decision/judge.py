@@ -42,6 +42,10 @@ class FinalDecision(BaseModel):
         default_factory=list,
         description="Mandatory post-hire onboarding guardrails, reference checks, or technical scoping checks."
     )
+    candidate_feedback: List[str] = Field(
+        default_factory=list,
+        description="Constructive, actionable feedback and growth recommendations for the candidate to improve their technical skills, communication, and interview presentation."
+    )
 
 
 JUDGE_SCHEMA_PROMPT = """You are the Lead Hiring Panel Judge.
@@ -68,7 +72,8 @@ STRICT SYNTHESIS GUIDELINES:
 2. WEIGH LENSES & RISK CATEGORIES: Weigh each agent's position by lens relevance, risk category severity, and stated confidence level — do NOT average numeric scores or count votes.
 3. SPECIFIC DEBATE QUOTES: You MUST cite at least 2 agents by name (e.g. 'Technical Lead Agent', 'Risk & Security Skeptic Agent', 'Engineering Director Agent', 'HR & Culture Specialist Agent') and reference a specific point or argument each raised during debate.
 4. UNRESOLVED TENSIONS: Explicitly state whether debate resolved disagreements or not. Do NOT paper over non-convergence; any lingering dissent MUST be recorded in 'unresolved_disagreements'.
-5. OUTPUT FORMAT: Strictly valid JSON matching the schema below:
+5. ACTIONABLE CANDIDATE FEEDBACK: Provide 2-4 constructive, growth-focused feedback statements in 'candidate_feedback' helping the candidate improve their technical depth, transparency, and interview presentation.
+6. OUTPUT FORMAT: Strictly valid JSON matching the schema below:
 
 {
   "candidate_name": "Full Name",
@@ -77,7 +82,8 @@ STRICT SYNTHESIS GUIDELINES:
   "confidence_level": "low" | "medium" | "high",
   "key_strengths": ["Strength 1", "Strength 2"],
   "unresolved_disagreements": ["Specific lingering tension 1", "Specific lingering tension 2"],
-  "risk_mitigations": ["Required post-hire check 1", "Required post-hire check 2"]
+  "risk_mitigations": ["Required post-hire check 1", "Required post-hire check 2"],
+  "candidate_feedback": ["Actionable skill improvement 1", "Constructive interview feedback 2"]
 }
 """
 

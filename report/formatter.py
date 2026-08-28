@@ -88,6 +88,12 @@ class ReportFormatter:
                 lines.append(f"- **[{agent_name}]:** {concern}")
             lines.append("")
 
+        if getattr(decision, "candidate_feedback", []):
+            lines.append("### 💡 Constructive Candidate Growth & Skill Feedback:")
+            for fb in decision.candidate_feedback:
+                lines.append(f"- 🎓 {fb}")
+            lines.append("")
+
         lines.extend([
             "---",
             "",

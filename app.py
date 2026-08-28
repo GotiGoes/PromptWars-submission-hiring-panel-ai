@@ -679,6 +679,19 @@ def main():
             for m in decision.risk_mitigations:
                 st.markdown(f"- 🔒 {m}")
 
+        if getattr(decision, "candidate_feedback", []):
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(
+                """
+                <div style='background-color:#F3E8FF; border:2px solid #C084FC; border-left:6px solid #7E22CE; padding:16px; border-radius:8px;'>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>💡 Actionable Candidate Growth & Skill Improvement Roadmap</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+            for fb in decision.candidate_feedback:
+                st.markdown(f"- 🎓 **{fb}**")
+
     # --- TAB 2: AGENT OPINIONS ---
     with tab_opinions:
         st.markdown("### 🕵️ Independent Opinions (Before Debate)")
