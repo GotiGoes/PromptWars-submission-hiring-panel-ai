@@ -1,0 +1,28 @@
+Alex Rivera
+Senior Software Engineer | Distributed Systems & Cloud Architecture
+Email: alex.rivera@example.com | Location: San Francisco, CA
+
+PROFESSIONAL SUMMARY
+Results-driven Senior Backend Engineer with 7 years of experience building high-throughput microservices, distributed event-driven systems, and data infrastructure. Proven track record in latency reduction, DB query tuning, and cloud migrations.
+
+WORK EXPERIENCE
+
+Lead Backend Engineer | CloudScale Tech (2022 - Present)
+- Architected event-driven microservices handling 50,000+ RPS using Go, Apache Kafka, and Redis.
+- Spearheaded company-wide AI transformation across all engineering teams to revolutionize backend development velocity.
+- Led a team of engineers in migrating legacy monolithic API to Kubernetes microservices, achieving 99.99% system availability.
+- Reduced PostgreSQL query latency by 45% through composite indexing and read-replica routing.
+
+Senior Software Engineer | DataFlow Systems (2019 - 2022)
+- Built distributed ETL pipelines in Python and Apache Spark processing 10TB+ daily data.
+- Single-handedly revamped entire infrastructure security posture and zero-trust framework.
+- Designed gRPC and RESTful APIs consumed by web and mobile client applications.
+- Mentored junior engineers and instituted automated CI/CD quality gates.
+
+TECHNICAL SKILLS
+- Programming Languages: Python, Go, SQL, TypeScript
+- Cloud & Infrastructure: AWS (EC2, S3, RDS, EKS), Docker, Kubernetes, Terraform
+- Databases & Middleware: PostgreSQL, Redis, Apache Kafka, Elasticsearch
+
+EDUCATION
+B.S. in Computer Science | University of California, Berkeley (2015 - 2019)
