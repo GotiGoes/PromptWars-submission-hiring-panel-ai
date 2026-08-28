@@ -142,8 +142,9 @@ def main():
 
     st.subheader("📋 Candidate Selection")
 
-    if "selected_candidate_key" not in st.session_state and candidates:
-        st.session_state["selected_candidate_key"] = list(candidates.keys())[0]
+    # Ensure selected candidate key exists in discovered candidates dict
+    if "selected_candidate_key" not in st.session_state or st.session_state["selected_candidate_key"] not in candidates:
+        st.session_state["selected_candidate_key"] = list(candidates.keys())[0] if candidates else None
 
     selected_candidate_key = st.session_state["selected_candidate_key"]
 
@@ -233,8 +234,9 @@ def main():
                         (new_folder / "resume.txt").write_text(formatted_res, encoding="utf-8")
                         (new_folder / "transcript.txt").write_text(trn_content, encoding="utf-8")
 
-                        new_label = f"{new_cand_name} ({folder_id})"
-                        st.session_state["selected_candidate_key"] = new_label
+                        fresh_candidates = discover_candidates(sample_data_dir)
+                        matched_key = next((k for k, p in fresh_candidates.items() if p.name == folder_id), list(fresh_candidates.keys())[0])
+                        st.session_state["selected_candidate_key"] = matched_key
                         st.success(f"✅ Candidate '{new_cand_name}' added to `sample_data/{folder_id}`!")
                         st.rerun()
     with col_e4:
@@ -272,8 +274,9 @@ def main():
                             (gen_folder / "resume.txt").write_text(gen_res, encoding="utf-8")
                             (gen_folder / "transcript.txt").write_text(gen_trn, encoding="utf-8")
 
-                            new_label = f"{gen_name} ({gen_folder_id})"
-                            st.session_state["selected_candidate_key"] = new_label
+                            fresh_candidates = discover_candidates(sample_data_dir)
+                            matched_key = next((k for k, p in fresh_candidates.items() if p.name == gen_folder_id), list(fresh_candidates.keys())[0])
+                            st.session_state["selected_candidate_key"] = matched_key
                             st.success(f"✅ Generated candidate '{gen_name}' in `sample_data/{gen_folder_id}`!")
                             st.rerun()
                         except Exception as e:
