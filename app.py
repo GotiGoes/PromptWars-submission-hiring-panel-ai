@@ -184,10 +184,10 @@ def main():
         st.error(f"❌ Missing required file `{missing}` in `{selected_dir}`.")
         return
 
-    # Expanders: What Happens, Documents, Add Candidate
-    col_e1, col_e2, col_e3 = st.columns(3)
+    # Expanders: What Happens, Documents, Add Candidate, AI Generator
+    col_e1, col_e2, col_e3, col_e4 = st.columns(4)
     with col_e1:
-        with st.expander("❓ What happens when I click Run? (Pipeline Overview)", expanded=False):
+        with st.expander("❓ What happens when I click Run?", expanded=False):
             st.markdown("""
             - 📄 **1. Profile Builder**: Extracts evidence-backed facts & verbatim quotes.
             - 🕵️ **2. Independent Opinions**: 4 isolated agents evaluate via distinct domain lenses.
@@ -196,7 +196,7 @@ def main():
             - 📊 **5. Report Formatter**: Renders 7-section Markdown report & download artifact.
             """)
     with col_e2:
-        with st.expander("📄 View Source Documents & Role JD", expanded=False):
+        with st.expander("📄 View Source Documents", expanded=False):
             tab1, tab2, tab3 = st.tabs(["Resume", "Transcript", "Job Description"])
             with tab1:
                 st.text_area("Resume Text", load_text_file(resume_path), height=180, disabled=True)
@@ -205,7 +205,7 @@ def main():
             with tab3:
                 st.text_area("Job Description", load_text_file(jd_path), height=180, disabled=True)
     with col_e3:
-        with st.expander("➕ Add New Candidate (Upload / Paste)", expanded=False):
+        with st.expander("➕ Add Candidate (Upload/Paste)", expanded=False):
             new_cand_name = st.text_input("Candidate Name:", placeholder="e.g. Vikram Sharma", key="new_cand_name")
             folder_id = new_cand_name.lower().replace(" ", "_").strip() if new_cand_name else "new_candidate"
 
@@ -237,6 +237,47 @@ def main():
                         st.session_state["selected_candidate_key"] = new_label
                         st.success(f"✅ Candidate '{new_cand_name}' added to `sample_data/{folder_id}`!")
                         st.rerun()
+    with col_e4:
+        with st.expander("🪄 AI Generate Candidate (Gemini)", expanded=False):
+            archetype_choice = st.selectbox(
+                "Archetype Preset:",
+                options=[
+                    "Senior AI Engineer with high skill but unverified metrics",
+                    "Mid-level RAG engineer with prompt security incident history",
+                    "Junior developer with rapid job-hopping & high confidence",
+                    "Principal architect with strong governance & conservative posture",
+                    "Custom Prompt..."
+                ],
+                key="arch_select"
+            )
+            if archetype_choice == "Custom Prompt...":
+                user_archetype = st.text_area("Custom Archetype Prompt:", placeholder="e.g. 5 yrs exp, overstates team leadership...", key="custom_arch")
+            else:
+                user_archetype = archetype_choice
+
+            if st.button("✨ Generate via Gemini", type="primary", use_container_width=True):
+                if not user_archetype.strip():
+                    st.error("Please select or enter an archetype prompt.")
+                else:
+                    with st.spinner("🤖 Generating synthetic resume & interview transcript via Gemini API..."):
+                        try:
+                            from profile_builder.generator import CandidateGenerator
+                            gen = CandidateGenerator(model_name=active_model)
+                            gen_name, gen_res, gen_trn = gen.generate_candidate(user_archetype)
+
+                            gen_folder_id = gen_name.lower().replace(" ", "_").strip()
+                            gen_folder = sample_data_dir / gen_folder_id
+                            gen_folder.mkdir(parents=True, exist_ok=True)
+
+                            (gen_folder / "resume.txt").write_text(gen_res, encoding="utf-8")
+                            (gen_folder / "transcript.txt").write_text(gen_trn, encoding="utf-8")
+
+                            new_label = f"{gen_name} ({gen_folder_id})"
+                            st.session_state["selected_candidate_key"] = new_label
+                            st.success(f"✅ Generated candidate '{gen_name}' in `sample_data/{gen_folder_id}`!")
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed to generate candidate: {e}")
 
     # --- RUN BUTTON ---
     st.markdown("<br>", unsafe_allow_html=True)
