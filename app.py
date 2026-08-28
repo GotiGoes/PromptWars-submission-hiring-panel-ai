@@ -139,36 +139,96 @@ def render_step_tracker(current_step: int, active_detail: str):
 
 
 def main():
-    # --- GLOBAL PURPLE & RED BACKGROUNDS WITH BLACK TEXT ---
+    # --- GLOBAL PURPLE & RED CONTAINER BACKGROUNDS WITH BLACK TEXT ---
     st.markdown(
         """
         <style>
-        body, .stApp {
+        /* 1. Full Page Background (App View, Main, Header, Block Containers) */
+        [data-testid="stAppViewContainer"],
+        .stApp,
+        [data-testid="stHeader"],
+        .stMain,
+        [data-testid="stMainBlockContainer"],
+        .main,
+        section.main {
+            background-color: #FAF5FF !important; /* Soft Light Purple Main Background */
+            color: #000000 !important;
+        }
+
+        /* 2. Sidebar Background & Borders */
+        [data-testid="stSidebar"],
+        [data-testid="stSidebarNav"],
+        section[data-testid="stSidebar"] {
+            background-color: #F3E8FF !important; /* Rich Soft Purple Sidebar */
+            border-right: 2px solid #C084FC !important;
+        }
+
+        /* 3. Sidebar Typography */
+        [data-testid="stSidebar"] *,
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] div,
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3,
+        [data-testid="stSidebar"] h4,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] b,
+        [data-testid="stSidebar"] small {
+            color: #000000 !important;
+        }
+
+        /* 4. Expander Header Bar (Details Summary) */
+        [data-testid="stExpander"] summary,
+        .stExpander summary {
+            background-color: #E9D5FF !important; /* Vibrant Soft Purple Header Bar */
+            color: #000000 !important;
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-weight: 700 !important;
+            border-bottom: 2px solid #C084FC !important;
+        }
+
+        [data-testid="stExpander"] summary *,
+        .stExpander summary * {
+            color: #000000 !important;
+            font-weight: 700 !important;
+        }
+
+        /* 5. Expander Main Body Box */
+        [data-testid="stExpander"],
+        .stExpander {
+            border: 2px solid #C084FC !important;
+            border-radius: 8px !important;
+            background-color: #F3E8FF !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        /* 6. Tabs Styling */
+        [data-baseweb="tab-list"] {
+            background-color: #F3E8FF !important;
+            border-radius: 8px !important;
+            padding: 4px !important;
+            border: 1px solid #C084FC !important;
+        }
+
+        [data-baseweb="tab"] {
+            color: #000000 !important;
+            font-weight: 700 !important;
+        }
+
+        /* 7. Ensure All Text in Body is Crisp Black */
+        .stApp p, .stApp span, .stApp label, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6, .stApp li, .stApp div, .stApp b, .stApp i, .stApp td, .stApp th {
             color: #000000 !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #FAF5FF; /* Soft Light Purple Background */
         }
-        h1, h2, h3, h4, h5, h6 {
-            color: #000000 !important;
-            font-weight: 800 !important;
-        }
-        p, li, label, div, span, b, i, small {
-            color: #000000 !important;
-            font-size: 15px;
-            line-height: 1.6;
-        }
+
         .stButton>button {
             font-weight: 700 !important;
             border-radius: 6px !important;
             font-size: 15px !important;
             padding: 8px 16px !important;
             color: #000000 !important;
-        }
-        .stExpander {
-            border: 2px solid #D8B4FE !important;
-            border-radius: 8px !important;
-            background-color: #F3E8FF !important; /* Soft Purple Background */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         </style>
         """,
