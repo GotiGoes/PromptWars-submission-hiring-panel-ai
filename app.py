@@ -1,12 +1,12 @@
 """Streamlit Web Interface for Hiring Panel AI Evaluation Pipeline.
 
 Polished visual presentation featuring:
-- Soft off-white & pastel tinted containers (no harsh bright white background)
-- High contrast dark slate text (#0F172A) clearly separated from container backgrounds
-- Persona-themed pastel cards (Sapphire, Mint, Lavender, Rose)
+- Theme: Rich shades of Purple and Red for backgrounds
+- Crisp, high-contrast Black text (#000000) for maximum readability
+- Persona-themed cards in purple & red gradients
 - Accessible tooltips & onboarding quick-start guide
-- 5-stage visual progress tracker with harmonious step indicators
-- 4 restructured output tabs with rich, non-harsh color hierarchy
+- 5-stage visual progress tracker
+- 4 output tabs with structured purple/red styling
 """
 
 import logging
@@ -29,43 +29,43 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- HARMONIOUS, NON-CLASHING PERSONA PALETTES ---
+# --- PURPLE & RED BACKGROUND PALETTE (BLACK TEXT) ---
 PERSONA_CONFIG = {
     "Technical Lead Agent": {
-        "color": "#1D4ED8",       # Muted Sapphire Blue
-        "bg_color": "#E0F2FE",    # Soft Ice Blue (off-white tint)
-        "text_color": "#0369A1",
-        "border_color": "#BAE6FD",
+        "color": "#7E22CE",       # Purple Accent
+        "bg_color": "#F3E8FF",    # Soft Light Purple
+        "text_color": "#000000",  # Black text
+        "border_color": "#C084FC",
         "icon": "🛠️",
-        "badge": "🔵",
+        "badge": "🟣",
         "role": "Technical Evaluator",
         "desc": "Evaluates architecture, stack depth, and engineering delivery."
     },
     "HR & Culture Specialist Agent": {
-        "color": "#047857",       # Muted Emerald Green
-        "bg_color": "#D1FAE5",    # Soft Mint Green (off-white tint)
-        "text_color": "#065F46",
-        "border_color": "#A7F3D0",
+        "color": "#6B21A8",       # Royal Purple Accent
+        "bg_color": "#EDE9FE",    # Soft Lavender Purple
+        "text_color": "#000000",  # Black text
+        "border_color": "#A855F7",
         "icon": "👥",
-        "badge": "🟢",
+        "badge": "🟣",
         "role": "HR & Culture Evaluator",
         "desc": "Evaluates tenure stability, candor, self-awareness, and retention."
     },
     "Engineering Director Agent": {
-        "color": "#6D28D9",       # Muted Deep Violet
-        "bg_color": "#EDE9FE",    # Soft Lavender (off-white tint)
-        "text_color": "#5B21B6",
-        "border_color": "#DDD6FE",
+        "color": "#BE123C",       # Crimson Red Accent
+        "bg_color": "#FFE4E6",    # Soft Rose Red
+        "text_color": "#000000",  # Black text
+        "border_color": "#FB7185",
         "icon": "👔",
-        "badge": "🟣",
+        "badge": "🔴",
         "role": "Hiring Manager",
         "desc": "Balances delivery impact, JD requirement fit, and team leadership."
     },
     "Risk & Security Skeptic Agent": {
-        "color": "#B91C1C",       # Muted Warm Rose Red
-        "bg_color": "#FEE2E2",    # Soft Muted Rose (off-white tint)
-        "text_color": "#991B1B",
-        "border_color": "#FECACA",
+        "color": "#B91C1C",       # Deep Red Accent
+        "bg_color": "#FEE2E2",    # Soft Warm Red
+        "text_color": "#000000",  # Black text
+        "border_color": "#FCA5A5",
         "icon": "🕵️",
         "badge": "🔴",
         "role": "Devil's Advocate",
@@ -74,13 +74,13 @@ PERSONA_CONFIG = {
 }
 
 VERDICT_CONFIG = {
-    "STRONG_HIRE": {"color": "#065F46", "bg": "#D1FAE5", "border": "#A7F3D0", "label": "🟢 STRONG HIRE", "desc": "Unanimous high-confidence recommendation."},
-    "HIRE": {"color": "#047857", "bg": "#D1FAE5", "border": "#A7F3D0", "label": "✅ HIRE", "desc": "Recommended for hire with manageable onboarding risks."},
-    "LEAN_HIRE": {"color": "#B45309", "bg": "#FEF3C7", "border": "#FDE68A", "label": "🟧 LEAN HIRE", "desc": "Marginal hire recommendation requiring targeted onboarding mitigations."},
-    "HOLD": {"color": "#B45309", "bg": "#FEF3C7", "border": "#FDE68A", "label": "⚠️ HOLD", "desc": "Requires additional reference checks or technical follow-up."},
-    "LEAN_REJECT": {"color": "#B91C1C", "bg": "#FEE2E2", "border": "#FECACA", "label": "🔻 LEAN REJECT", "desc": "Significant concerns outweigh candidate strengths."},
-    "REJECT": {"color": "#991B1B", "bg": "#FEE2E2", "border": "#FECACA", "label": "❌ REJECT", "desc": "Critical skill-gap or operational risk identified."},
-    "NO_HIRE": {"color": "#991B1B", "bg": "#FEE2E2", "border": "#FECACA", "label": "🚫 NO HIRE", "desc": "Authoritative non-hire verdict synthesized by Panel Judge."},
+    "STRONG_HIRE": {"color": "#6B21A8", "bg": "#F3E8FF", "border": "#C084FC", "label": "🟣 STRONG HIRE", "desc": "Unanimous high-confidence recommendation."},
+    "HIRE": {"color": "#7E22CE", "bg": "#F3E8FF", "border": "#C084FC", "label": "✅ HIRE", "desc": "Recommended for hire with manageable onboarding risks."},
+    "LEAN_HIRE": {"color": "#BE123C", "bg": "#FFE4E6", "border": "#FB7185", "label": "🟧 LEAN HIRE", "desc": "Marginal hire recommendation requiring targeted onboarding mitigations."},
+    "HOLD": {"color": "#BE123C", "bg": "#FFE4E6", "border": "#FB7185", "label": "⚠️ HOLD", "desc": "Requires additional reference checks or technical follow-up."},
+    "LEAN_REJECT": {"color": "#B91C1C", "bg": "#FEE2E2", "border": "#FCA5A5", "label": "🔻 LEAN REJECT", "desc": "Significant concerns outweigh candidate strengths."},
+    "REJECT": {"color": "#991B1B", "bg": "#FEE2E2", "border": "#FCA5A5", "label": "❌ REJECT", "desc": "Critical skill-gap or operational risk identified."},
+    "NO_HIRE": {"color": "#991B1B", "bg": "#FEE2E2", "border": "#FCA5A5", "label": "🚫 NO HIRE", "desc": "Authoritative non-hire verdict synthesized by Panel Judge."},
 }
 
 
@@ -106,7 +106,7 @@ def load_text_file(path: Path) -> str:
 
 
 def render_step_tracker(current_step: int, active_detail: str):
-    """Render horizontal visual progress step tracker with soft off-white colors."""
+    """Render horizontal visual progress step tracker with purple & red shades."""
     steps = [
         ("1. Profile", "📄"),
         ("2. Opinions", "🕵️"),
@@ -119,55 +119,56 @@ def render_step_tracker(current_step: int, active_detail: str):
         with cols[idx - 1]:
             if idx < current_step:
                 st.markdown(
-                    f"<div style='background-color:#D1FAE5; border-left:5px solid #059669; border:1px solid #A7F3D0; padding:10px; border-radius:6px; font-size:14.5px; color:#065F46; font-weight:bold;'>"
+                    f"<div style='background-color:#F3E8FF; border-left:5px solid #7E22CE; border:1px solid #C084FC; padding:10px; border-radius:6px; font-size:14.5px; color:#000000; font-weight:bold;'>"
                     f"✓ {icon} {label}</div>",
                     unsafe_allow_html=True
                 )
             elif idx == current_step:
                 st.markdown(
-                    f"<div style='background-color:#E0F2FE; border-left:5px solid #2563EB; border:1px solid #BAE6FD; padding:10px; border-radius:6px; font-size:14.5px; color:#0369A1; font-weight:bold;'>"
+                    f"<div style='background-color:#FFE4E6; border-left:5px solid #BE123C; border:1px solid #FB7185; padding:10px; border-radius:6px; font-size:14.5px; color:#000000; font-weight:bold;'>"
                     f"⏳ {icon} {label}</div>",
                     unsafe_allow_html=True
                 )
             else:
                 st.markdown(
-                    f"<div style='background-color:#F1F5F9; border-left:5px solid #94A3B8; border:1px solid #CBD5E1; padding:10px; border-radius:6px; font-size:14.5px; color:#334155;'>"
+                    f"<div style='background-color:#F5F3FF; border-left:5px solid #DDD6FE; border:1px solid #E9D5FF; padding:10px; border-radius:6px; font-size:14.5px; color:#000000;'>"
                     f"{icon} {label}</div>",
                     unsafe_allow_html=True
                 )
-    st.markdown(f"<p style='font-size:15px; color:#0F172A; margin-top:8px;'><b>Status:</b> {active_detail}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size:15px; color:#000000; font-weight:600; margin-top:8px;'><b>Status:</b> {active_detail}</p>", unsafe_allow_html=True)
 
 
 def main():
-    # --- GLOBAL ELEGANT SOFT OFF-WHITE & HIGH-CONTRAST TEXT STYLES ---
+    # --- GLOBAL PURPLE & RED BACKGROUNDS WITH BLACK TEXT ---
     st.markdown(
         """
         <style>
         body, .stApp {
-            color: #0F172A;
+            color: #000000 !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #F8FAFC; /* Soft Off-White Background */
+            background-color: #FAF5FF; /* Soft Light Purple Background */
         }
         h1, h2, h3, h4, h5, h6 {
-            color: #0F172A !important;
-            font-weight: 700 !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
         }
-        p, li, label, div {
-            color: #0F172A;
+        p, li, label, div, span, b, i, small {
+            color: #000000 !important;
             font-size: 15px;
             line-height: 1.6;
         }
         .stButton>button {
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             border-radius: 6px !important;
             font-size: 15px !important;
             padding: 8px 16px !important;
+            color: #000000 !important;
         }
         .stExpander {
-            border: 1px solid #CBD5E1 !important;
+            border: 2px solid #D8B4FE !important;
             border-radius: 8px !important;
-            background-color: #F1F5F9 !important; /* Off-White Tinted Expander */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            background-color: #F3E8FF !important; /* Soft Purple Background */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         </style>
         """,
@@ -196,8 +197,8 @@ def main():
     for persona, cfg in PERSONA_CONFIG.items():
         st.sidebar.markdown(
             f"<div style='border-left:5px solid {cfg['color']}; background-color:{cfg['bg_color']}; border:1px solid {cfg['border_color']}; padding:10px; border-radius:6px; margin-bottom:8px;'>"
-            f"<b style='color:{cfg['text_color']}; font-size:14px;'>{cfg['icon']} {persona.replace(' Agent', '')}</b><br>"
-            f"<small style='color:#1E293B;'><b>Role:</b> {cfg['role']}</small></div>",
+            f"<b style='color:#000000; font-size:14px;'>{cfg['icon']} {persona.replace(' Agent', '')}</b><br>"
+            f"<small style='color:#000000;'><b>Role:</b> {cfg['role']}</small></div>",
             unsafe_allow_html=True
         )
 
@@ -207,7 +208,7 @@ def main():
     # --- MAIN HEADER & USER GUIDANCE ---
     st.title("🧑‍💼 Autonomous Multi-Agent Hiring Panel AI")
     st.markdown(
-        "<p style='font-size:17px; color:#1E293B; margin-top:-10px;'>"
+        "<p style='font-size:17px; color:#000000; font-weight:600; margin-top:-10px;'>"
         "<b>4 Autonomous AI Agents</b> evaluate job candidates through distinct professional lenses, engage in multi-round debate, and synthesize evidence-weighted hiring decisions."
         "</p>",
         unsafe_allow_html=True
@@ -217,11 +218,11 @@ def main():
     with st.expander("💡 **Quick Start Guide: How to Use & Test This App (Click to Expand)**", expanded=True):
         st.markdown(
             """
-            <div style='background-color:#EEF2FF; border-left:5px solid #4338CA; border:1px solid #C7D2FE; padding:18px; border-radius:8px;'>
-                <h4 style='margin-top:0; color:#312E81;'>🚀 3-Step Quick Evaluation Walkthrough</h4>
-                <ol style='margin-bottom:8px; padding-left:20px; color:#1E1B4B;'>
+            <div style='background-color:#F3E8FF; border-left:6px solid #7E22CE; border:2px solid #C084FC; padding:18px; border-radius:8px;'>
+                <h4 style='margin-top:0; color:#000000;'>🚀 3-Step Quick Evaluation Walkthrough</h4>
+                <ol style='margin-bottom:8px; padding-left:20px; color:#000000;'>
                     <li><b>Step 1: Select a Candidate</b> — Pick a benchmark candidate card below (e.g. <b>Rohan Malhotra</b> or <b>Ananya Iyer</b>), or add/generate your own.</li>
-                    <li><b>Step 2: Run Evaluation</b> — Click the primary blue button <b>"🚀 Step 2: Run Live Evaluation Panel"</b>. The 5-stage progress bar will track the live LLM pipeline.</li>
+                    <li><b>Step 2: Run Evaluation</b> — Click the primary button <b>"🚀 Step 2: Run Live Evaluation Panel"</b>. The 5-stage progress bar will track the live LLM pipeline.</li>
                     <li><b>Step 3: Explore 4 Interactive Output Tabs</b>:
                         <ul>
                             <li><b>🏆 Summary & Verdict</b>: Panel Judge CoT reasoning, risk categorization, and required onboarding mitigations.</li>
@@ -262,19 +263,20 @@ def main():
         is_selected = (label == selected_candidate_key)
 
         with cand_cols[idx % len(cand_cols)]:
-            border_color = "#2563EB" if is_selected else "#CBD5E1"
-            bg_color = "#E0F2FE" if is_selected else "#F1F5F9"  # Off-white tinted background
-            status_badge = "<span style='background-color:#1D4ED8; color:white; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:bold;'>✓ CURRENTLY SELECTED</span>" if is_selected else "<span style='background-color:#E2E8F0; color:#334155; padding:4px 10px; border-radius:6px; font-size:12px; border:1px solid #CBD5E1;'>Click to Select</span>"
+            # Selected: Purple background, Unselected: Red background
+            border_color = "#7E22CE" if is_selected else "#BE123C"
+            bg_color = "#E9D5FF" if is_selected else "#FFE4E6"
+            status_badge = "<span style='background-color:#7E22CE; color:#FFFFFF; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:bold;'>✓ CURRENTLY SELECTED</span>" if is_selected else "<span style='background-color:#FECACA; color:#000000; padding:4px 10px; border-radius:6px; font-size:12px; border:1px solid #FB7185;'>Click to Select</span>"
 
             st.markdown(
                 f"""
-                <div style='border:2px solid {border_color}; background-color:{bg_color}; padding:18px; border-radius:10px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);'>
+                <div style='border:2px solid {border_color}; background-color:{bg_color}; padding:18px; border-radius:10px; margin-bottom:12px; box-shadow:0 2px 4px rgba(0,0,0,0.06);'>
                     <div style='display:flex; justify-content:space-between; align-items:center;'>
-                        <h4 style='margin:0; color:#0F172A; font-size:18px;'>👤 {c_name}</h4>
+                        <h4 style='margin:0; color:#000000; font-size:18px;'>👤 {c_name}</h4>
                         {status_badge}
                     </div>
-                    <p style='margin:8px 0 4px 0; font-size:13.5px; color:#1E293B;'><b>Folder:</b> <code>sample_data/{c_id}</code></p>
-                    <p style='margin:0; font-size:13.5px; color:#1E293B;'><b>Target Role:</b> AI Engineer (Freight Ops)</p>
+                    <p style='margin:8px 0 4px 0; font-size:13.5px; color:#000000;'><b>Folder:</b> <code>sample_data/{c_id}</code></p>
+                    <p style='margin:0; font-size:13.5px; color:#000000;'><b>Target Role:</b> AI Engineer (Freight Ops)</p>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -500,13 +502,13 @@ def main():
         st.markdown("---")
         st.markdown(
             """
-            <div style='background-color:#F1F5F9; border:2px solid #CBD5E1; border-radius:10px; padding:28px; text-align:center;'>
-                <h3 style='color:#0F172A; margin-bottom:10px;'>👋 Welcome to the Autonomous Hiring Panel AI</h3>
-                <p style='color:#1E293B; max-width:760px; margin:0 auto 20px auto; font-size:16px;'>
+            <div style='background-color:#F3E8FF; border:2px solid #C084FC; border-radius:10px; padding:28px; text-align:center;'>
+                <h3 style='color:#000000; margin-bottom:10px;'>👋 Welcome to the Autonomous Hiring Panel AI</h3>
+                <p style='color:#000000; max-width:760px; margin:0 auto 20px auto; font-size:16px; font-weight:600;'>
                     Select a candidate card above and click <b>🚀 Step 2: Run Live Evaluation Panel</b> to execute live multi-agent analysis, 
                     cross-agent debate, and evidence-weighted decision synthesis.
                 </p>
-                <div style='display:flex; justify-content:center; gap:20px; font-weight:bold; color:#0F172A; font-size:15px;'>
+                <div style='display:flex; justify-content:center; gap:20px; font-weight:bold; color:#000000; font-size:15px;'>
                     <span>📄 Fact Extraction</span> ➔ 
                     <span>🕵️ 4 Persona Lenses</span> ➔ 
                     <span>🗣️ Dynamic Debate</span> ➔ 
@@ -552,15 +554,15 @@ def main():
 
     # --- TAB 1: SUMMARY & VERDICT ---
     with tab_summary:
-        v_cfg = VERDICT_CONFIG.get(decision.final_recommendation, {"color": "#1D4ED8", "bg": "#E0F2FE", "border": "#BAE6FD", "label": decision.final_recommendation, "desc": "Synthesized decision."})
+        v_cfg = VERDICT_CONFIG.get(decision.final_recommendation, {"color": "#7E22CE", "bg": "#F3E8FF", "border": "#C084FC", "label": decision.final_recommendation, "desc": "Synthesized decision."})
         st.markdown(
             f"""
-            <div style='background-color:{v_cfg["bg"]}; border-left:8px solid {v_cfg["color"]}; border:2px solid {v_cfg["border"]}; color:#0F172A; padding:24px; border-radius:10px; margin-bottom:24px;'>
-                <h2 style='margin:0; color:{v_cfg["color"]}; font-size:26px;'>Verdict: {v_cfg["label"]}</h2>
-                <p style='margin:8px 0 0 0; font-size:16px; color:#0F172A;'>
+            <div style='background-color:{v_cfg["bg"]}; border-left:8px solid {v_cfg["color"]}; border:2px solid {v_cfg["border"]}; color:#000000; padding:24px; border-radius:10px; margin-bottom:24px;'>
+                <h2 style='margin:0; color:#000000; font-size:26px;'>Verdict: {v_cfg["label"]}</h2>
+                <p style='margin:8px 0 0 0; font-size:16px; color:#000000;'>
                     <b>Synthesis Mode:</b> Evaluated on agents' <b>FINAL post-debate positions</b> (weighed by PanelJudge risk categories), not initial pre-debate scores.
                 </p>
-                <p style='margin:6px 0 0 0; font-size:15px; color:#1E293B;'>Panel Confidence Level: <b>{decision.confidence_level.upper()}</b> | <i>{v_cfg["desc"]}</i></p>
+                <p style='margin:6px 0 0 0; font-size:15px; color:#000000;'>Panel Confidence Level: <b>{decision.confidence_level.upper()}</b> | <i>{v_cfg["desc"]}</i></p>
             </div>
             """,
             unsafe_allow_html=True
@@ -573,8 +575,8 @@ def main():
         with scol1:
             st.markdown(
                 """
-                <div style='background-color:#D1FAE5; border:1px solid #A7F3D0; border-left:5px solid #059669; padding:16px; border-radius:8px;'>
-                    <h4 style='margin:0 0 8px 0; color:#065F46;'>🌟 Key Candidate Strengths</h4>
+                <div style='background-color:#F3E8FF; border:2px solid #C084FC; border-left:6px solid #7E22CE; padding:16px; border-radius:8px;'>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>🌟 Key Candidate Strengths</h4>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -585,8 +587,8 @@ def main():
         with scol2:
             st.markdown(
                 """
-                <div style='background-color:#FEE2E2; border:1px solid #FECACA; border-left:5px solid #DC2626; padding:16px; border-radius:8px;'>
-                    <h4 style='margin:0 0 8px 0; color:#991B1B;'>⚠️ Unresolved Panel Tensions & Risks</h4>
+                <div style='background-color:#FFE4E6; border:2px solid #FB7185; border-left:6px solid #BE123C; padding:16px; border-radius:8px;'>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>⚠️ Unresolved Panel Tensions & Risks</h4>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -598,8 +600,8 @@ def main():
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown(
                 """
-                <div style='background-color:#FEF3C7; border:1px solid #FDE68A; border-left:5px solid #D97706; padding:16px; border-radius:8px;'>
-                    <h4 style='margin:0 0 8px 0; color:#92400E;'>🛡️ Required Post-Hire Risk Mitigations</h4>
+                <div style='background-color:#FEE2E2; border:2px solid #FCA5A5; border-left:6px solid #B91C1C; padding:16px; border-radius:8px;'>
+                    <h4 style='margin:0 0 8px 0; color:#000000;'>🛡️ Required Post-Hire Risk Mitigations</h4>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -610,34 +612,34 @@ def main():
     # --- TAB 2: AGENT OPINIONS ---
     with tab_opinions:
         st.markdown("### 🕵️ Independent Opinions (Before Debate)")
-        st.markdown("<p style='font-size:15px; color:#1E293B;'>Initial, isolated verdicts rendered by each agent BEFORE reading peer arguments or entering debate.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size:15px; color:#000000;'>Initial, isolated verdicts rendered by each agent BEFORE reading peer arguments or entering debate.</p>", unsafe_allow_html=True)
         st.info("💡 **Note**: To see WHY an agent updated their position (e.g. HR moving from LEAN_REJECT ➔ HIRE), check the **🗣️ Multi-Round Debate** tab to read the exact rebuttal exchange.")
 
         final_opinions = getattr(debate_result, "final_opinions", initial_ops)
 
         op_cols = st.columns(2)
         for idx, op in enumerate(initial_ops):
-            p_cfg = PERSONA_CONFIG.get(op.agent_name, {"color": "#475569", "bg_color": "#F1F5F9", "border_color": "#CBD5E1", "text_color": "#0F172A", "icon": "👤", "badge": "⚪", "role": op.persona_role})
+            p_cfg = PERSONA_CONFIG.get(op.agent_name, {"color": "#7E22CE", "bg_color": "#F3E8FF", "border_color": "#C084FC", "text_color": "#000000", "icon": "👤", "badge": "🟣", "role": op.persona_role})
             op_final = next((o for o in final_opinions if o.agent_name == op.agent_name), op)
 
             init_rating_str = f"{op.rating} ({op.score}/10)"
             final_rating_str = f"{op_final.rating} ({op_final.score}/10)"
 
             if op.score != op_final.score or op.rating != op_final.rating:
-                position_badge = f"<span style='background-color:#D1FAE5; color:#065F46; padding:6px 10px; border-radius:6px; font-weight:bold; font-size:13px; border:1px solid #A7F3D0;'>Initial: {init_rating_str} ➔ Final: {final_rating_str} (REVISED)</span>"
+                position_badge = f"<span style='background-color:#F3E8FF; color:#000000; padding:6px 10px; border-radius:6px; font-weight:bold; font-size:13px; border:1.5px solid #C084FC;'>Initial: {init_rating_str} ➔ Final: {final_rating_str} (REVISED)</span>"
             else:
-                position_badge = f"<span style='background-color:#F1F5F9; color:#1E293B; padding:6px 10px; border-radius:6px; font-weight:bold; font-size:13px; border:1px solid #CBD5E1;'>Initial: {init_rating_str} ➔ Final: {final_rating_str} (Unchanged)</span>"
+                position_badge = f"<span style='background-color:#FFE4E6; color:#000000; padding:6px 10px; border-radius:6px; font-weight:bold; font-size:13px; border:1.5px solid #FB7185;'>Initial: {init_rating_str} ➔ Final: {final_rating_str} (Unchanged)</span>"
 
             with op_cols[idx % 2]:
                 st.markdown(
                     f"""
-                    <div style='border-left:6px solid {p_cfg["color"]}; background-color:{p_cfg["bg_color"]}; border:1px solid {p_cfg["border_color"]}; padding:18px; border-radius:8px; margin-bottom:18px;'>
+                    <div style='border-left:6px solid {p_cfg["color"]}; background-color:{p_cfg["bg_color"]}; border:2px solid {p_cfg["border_color"]}; padding:18px; border-radius:8px; margin-bottom:18px;'>
                         <div style='display:flex; justify-content:space-between; align-items:center;'>
-                            <h4 style='margin:0; color:{p_cfg["text_color"]}; font-size:18px;'>{p_cfg["icon"]} {op.agent_name}</h4>
+                            <h4 style='margin:0; color:#000000; font-size:18px;'>{p_cfg["icon"]} {op.agent_name}</h4>
                             {position_badge}
                         </div>
-                        <p style='margin:6px 0 10px 0; color:#1E293B; font-size:13.5px;'><b>Lens:</b> {op.persona_role} | <b>Initial Confidence:</b> {op.confidence}</p>
-                        <p style='margin:0; font-size:14.5px; color:#0F172A;'><b>Pre-Debate Rationale:</b> {op.rationale[:220]}...</p>
+                        <p style='margin:6px 0 10px 0; color:#000000; font-size:13.5px;'><b>Lens:</b> {op.persona_role} | <b>Initial Confidence:</b> {op.confidence}</p>
+                        <p style='margin:0; font-size:14.5px; color:#000000;'><b>Pre-Debate Rationale:</b> {op.rationale[:220]}...</p>
                     </div>
                     """,
                     unsafe_allow_html=True
@@ -661,7 +663,7 @@ def main():
         dcol1, dcol2 = st.columns([3, 1])
         with dcol1:
             st.markdown("### 🗣️ Phase 2: Cross-Agent Multi-Round Debate")
-            st.markdown(f"<p style='font-size:15px; color:#1E293B;'>Total Rounds Conducted: <b>{debate_result.total_rounds_conducted}</b> | Rebuttals Generated: <b>{len(debate_result.debate_transcript)}</b></p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='font-size:15px; color:#000000;'>Total Rounds Conducted: <b>{debate_result.total_rounds_conducted}</b> | Rebuttals Generated: <b>{len(debate_result.debate_transcript)}</b></p>", unsafe_allow_html=True)
         with dcol2:
             st.markdown("<br>", unsafe_allow_html=True)
             voice_btn = st.button("🔊 Generate Voice Debate", use_container_width=True, help="Synthesize multi-voice audio dramatization using pyttsx3.")
@@ -723,20 +725,25 @@ def main():
         st.markdown("#### 💬 Full Debate Transcript")
 
         for i, reb in enumerate(debate_result.debate_transcript, 1):
-            p_cfg = PERSONA_CONFIG.get(reb.agent_name, {"color": "#475569", "bg_color": "#F1F5F9", "border_color": "#CBD5E1", "text_color": "#0F172A", "icon": "🗣️", "badge": "⚪"})
+            # Alternate Purple and Red container backgrounds
+            card_bg = "#F3E8FF" if i % 2 == 1 else "#FFE4E6"
+            card_border = "#C084FC" if i % 2 == 1 else "#FB7185"
+            card_accent = "#7E22CE" if i % 2 == 1 else "#BE123C"
+
+            p_cfg = PERSONA_CONFIG.get(reb.agent_name, {"color": card_accent, "bg_color": card_bg, "border_color": card_border, "text_color": "#000000", "icon": "🗣️", "badge": "⚪"})
             stance_icon = "🔴" if reb.stance == "disagree" else ("🟢" if reb.stance == "agree" else "🟡")
 
             st.markdown(
                 f"""
-                <div style='border-left:6px solid {p_cfg["color"]}; background-color:{p_cfg["bg_color"]}; border:1px solid {p_cfg["border_color"]}; padding:18px; border-radius:8px; margin-bottom:16px;'>
+                <div style='border-left:6px solid {p_cfg["color"]}; background-color:{p_cfg["bg_color"]}; border:2px solid {p_cfg["border_color"]}; padding:18px; border-radius:8px; margin-bottom:16px;'>
                     <div style='display:flex; justify-content:space-between; align-items:center;'>
-                        <h4 style='margin:0; color:{p_cfg["text_color"]}; font-size:18px;'>{p_cfg["icon"]} Rebuttal #{i} (Round {reb.round_number}) — <b>{reb.agent_name}</b></h4>
-                        <span style='font-size:14px; color:#0F172A;'><b>Stance:</b> {stance_icon} <code>{reb.stance.upper()}</code></span>
+                        <h4 style='margin:0; color:#000000; font-size:18px;'>{p_cfg["icon"]} Rebuttal #{i} (Round {reb.round_number}) — <b>{reb.agent_name}</b></h4>
+                        <span style='font-size:14px; color:#000000;'><b>Stance:</b> {stance_icon} <code>{reb.stance.upper()}</code></span>
                     </div>
-                    <p style='margin:6px 0; font-size:14px; color:#1E293B;'><b>Addressing Peer:</b> <code>{reb.target_agent_named}</code></p>
-                    <p style='margin:0 0 10px 0; font-size:14px; color:#1E293B;'><b>Point Addressed:</b> <i>"{reb.target_point_referenced}"</i></p>
-                    {"<p style='margin:0 0 10px 0; font-size:14px; color:#047857;'><b>Position Revision:</b> Rating=<code>" + str(reb.revised_rating) + "</code>, Score=<code>" + str(reb.revised_score) + "/10</code></p>" if (reb.revised_rating or reb.revised_score) else ""}
-                    <div style='background-color:#F1F5F9; padding:14px; border-radius:6px; border:1px solid #CBD5E1; font-size:14.5px; color:#0F172A;'>
+                    <p style='margin:6px 0; font-size:14px; color:#000000;'><b>Addressing Peer:</b> <code>{reb.target_agent_named}</code></p>
+                    <p style='margin:0 0 10px 0; font-size:14px; color:#000000;'><b>Point Addressed:</b> <i>"{reb.target_point_referenced}"</i></p>
+                    {"<p style='margin:0 0 10px 0; font-size:14px; color:#000000;'><b>Position Revision:</b> Rating=<code>" + str(reb.revised_rating) + "</code>, Score=<code>" + str(reb.revised_score) + "/10</code></p>" if (reb.revised_rating or reb.revised_score) else ""}
+                    <div style='background-color:#F5F3FF; padding:14px; border-radius:6px; border:1px solid #DDD6FE; font-size:14.5px; color:#000000;'>
                         {reb.updated_rationale}
                     </div>
                 </div>
