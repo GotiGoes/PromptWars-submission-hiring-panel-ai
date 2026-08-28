@@ -184,8 +184,8 @@ def main():
         st.error(f"❌ Missing required file `{missing}` in `{selected_dir}`.")
         return
 
-    # Expanders: What Happens & Documents
-    col_e1, col_e2 = st.columns(2)
+    # Expanders: What Happens, Documents, Add Candidate
+    col_e1, col_e2, col_e3 = st.columns(3)
     with col_e1:
         with st.expander("❓ What happens when I click Run? (Pipeline Overview)", expanded=False):
             st.markdown("""
@@ -204,6 +204,39 @@ def main():
                 st.text_area("Interview Transcript", load_text_file(transcript_path), height=180, disabled=True)
             with tab3:
                 st.text_area("Job Description", load_text_file(jd_path), height=180, disabled=True)
+    with col_e3:
+        with st.expander("➕ Add New Candidate (Upload / Paste)", expanded=False):
+            new_cand_name = st.text_input("Candidate Name:", placeholder="e.g. Vikram Sharma", key="new_cand_name")
+            folder_id = new_cand_name.lower().replace(" ", "_").strip() if new_cand_name else "new_candidate"
+
+            st.markdown("##### 📄 Resume (`resume.txt`)")
+            up_res = st.file_uploader("Upload Resume File (.txt)", type=["txt"], key="up_resume")
+            txt_res = st.text_area("Or Paste Resume Text:", height=100, placeholder="Paste resume text...", key="txt_resume")
+
+            st.markdown("##### 🗣️ Interview Transcript (`transcript.txt`)")
+            up_trn = st.file_uploader("Upload Transcript File (.txt)", type=["txt"], key="up_transcript")
+            txt_trn = st.text_area("Or Paste Interview Transcript:", height=100, placeholder="Paste transcript text...", key="txt_transcript")
+
+            if st.button("💾 Save & Add Candidate", type="primary", use_container_width=True):
+                if not new_cand_name.strip():
+                    st.error("Please enter a candidate name.")
+                else:
+                    res_content = up_res.read().decode("utf-8", errors="ignore") if up_res is not None else txt_res.strip()
+                    trn_content = up_trn.read().decode("utf-8", errors="ignore") if up_trn is not None else txt_trn.strip()
+
+                    if not res_content or not trn_content:
+                        st.error("Both Resume and Interview Transcript are required!")
+                    else:
+                        new_folder = sample_data_dir / folder_id
+                        new_folder.mkdir(parents=True, exist_ok=True)
+                        formatted_res = f"{new_cand_name}\n\n{res_content}" if new_cand_name not in res_content[:50] else res_content
+                        (new_folder / "resume.txt").write_text(formatted_res, encoding="utf-8")
+                        (new_folder / "transcript.txt").write_text(trn_content, encoding="utf-8")
+
+                        new_label = f"{new_cand_name} ({folder_id})"
+                        st.session_state["selected_candidate_key"] = new_label
+                        st.success(f"✅ Candidate '{new_cand_name}' added to `sample_data/{folder_id}`!")
+                        st.rerun()
 
     # --- RUN BUTTON ---
     st.markdown("<br>", unsafe_allow_html=True)
