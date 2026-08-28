@@ -42,7 +42,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Environment Configuration
-Create a `.env` file in the project root:
+Copy `.env.example` to `.env` and add your Google Gemini API key:
+```bash
+cp .env.example .env
+```
+Or populate `.env` directly:
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 LLM_PROVIDER=gemini
