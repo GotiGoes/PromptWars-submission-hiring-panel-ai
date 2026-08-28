@@ -200,13 +200,45 @@ def main():
             font-weight: 700 !important;
         }
 
-        /* 7. Button Styling */
-        .stButton>button {
+        /* 7. Primary Buttons (e.g., Run Evaluation Panel, Selected Candidate) */
+        .stButton > button[kind="primary"],
+        button[data-testid="stBaseButton-primary"] {
+            background-color: #7E22CE !important; /* Deep Royal Purple */
+            color: #FFFFFF !important; /* Bold Crisp White Text */
+            border: 2px solid #6B21A8 !important;
             font-weight: 700 !important;
-            border-radius: 6px !important;
             font-size: 15px !important;
-            padding: 8px 16px !important;
+            border-radius: 8px !important;
+            padding: 10px 18px !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+        }
+
+        .stButton > button[kind="primary"]:hover,
+        button[data-testid="stBaseButton-primary"]:hover {
+            background-color: #6B21A8 !important;
+            color: #FFFFFF !important;
+            border-color: #581C87 !important;
+        }
+
+        /* 8. Secondary Unselected Buttons (e.g., Select Candidate) */
+        .stButton > button[kind="secondary"],
+        button[data-testid="stBaseButton-secondary"],
+        .stButton > button {
+            background-color: #EDE9FE !important; /* Soft Lavender Purple Background */
+            color: #000000 !important; /* Bold Crisp Black Text */
+            border: 2px solid #C084FC !important; /* Purple Border */
+            font-weight: 700 !important;
+            font-size: 15px !important;
+            border-radius: 8px !important;
+            padding: 10px 18px !important;
+        }
+
+        .stButton > button[kind="secondary"]:hover,
+        button[data-testid="stBaseButton-secondary"]:hover,
+        .stButton > button:hover {
+            background-color: #E9D5FF !important; /* Vibrant Soft Violet on Hover */
             color: #000000 !important;
+            border-color: #7E22CE !important;
         }
         </style>
         """,
